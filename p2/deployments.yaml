@@ -1,0 +1,84 @@
+# This file contains the deployment configuration for the three applications. 
+# PODs for the three applications are created using the same image, but with different environment variables.
+# The environment variable MESSAGE is set to a different value for each application. The number of replicas for each application is also different. 
+# The app-one deployment has one replica, the app-two deployment has three replicas, and the app-three deployment has one replica.
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: hello-kubernetes
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-one
+  labels:
+    app: app-one
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: app-one
+  template:
+    metadata:
+      labels:
+        app: app-one
+    spec:
+      containers:
+        - name: hello-kubernetes
+          image: "paulbouwer/hello-kubernetes:1.10"
+          env:
+          - name: MESSAGE
+            value: "Hello from app1."
+          ports:
+            - containerPort: 8080
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-two
+  labels:
+    app: app-two
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: app-two
+  template:
+    metadata:
+      labels:
+        app: app-two
+    spec:
+      containers:
+        - name: hello-kubernetes
+          image: "paulbouwer/hello-kubernetes:1.10"
+          env:
+          - name: MESSAGE
+            value: "Hello from app2."
+          ports:
+            - containerPort: 8080
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-three
+  labels:
+    app: app-three
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: app-three
+  template:
+    metadata:
+      labels:
+        app: app-three
+    spec:
+      containers:
+        - name: hello-kubernetes
+          image: "paulbouwer/hello-kubernetes:1.10"
+          env:
+          - name: MESSAGE
+            value: "Hello from app3."
+          ports:
+            - containerPort: 8080

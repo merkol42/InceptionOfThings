@@ -1,0 +1,19 @@
+Vagrant.configure("2") do |config|
+  config.vm.box = "debian/bookworm64"
+  config.vm.box_check_update = false
+ 
+  config.vm.define "merkolS" do |server|
+	server.vm.hostname = "merkolS"
+	server.vm.network :private_network, ip: "192.168.56.110"
+	server.vm.synced_folder ".", "/vagrant", disabled: false
+	server.vm.provider "virtualbox" do |v|
+		v.name = "merkolS"
+	     	v.gui = false
+	     	v.memory = "1024"
+	     	v.cpus = 2
+		end
+	server.ssh.insert_key = false
+	server.ssh.private_key_path = ['~/.vagrant.d/insecure_private_key', '~/.ssh/id_rsa']
+	server.vm.provision "shell", privileged: true, path: "server.sh"
+	end
+end

@@ -1,0 +1,38 @@
+# This file is used to create an Ingress resource in the Kubernetes cluster.
+# This file contains the configuration for the k3s ingress.
+# The k3s ingress is responsible for routing incoming traffic to the appropriate services in the cluster.
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-orchestration
+spec:
+  rules:
+  - http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: app-three
+            port:
+              number: 80
+  - host: app1.com
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: app-one
+            port:
+              number: 80
+  - host: app2.com
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: app-two
+            port:
+              number: 80
