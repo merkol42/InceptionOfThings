@@ -1,0 +1,62 @@
+prometheus:
+  install: false
+gitlab-runner:
+  install: false
+nginx-ingress:
+  controller:
+    replicaCount: 1
+    minAvailable: 0
+    resources:
+      requests:
+        cpu: 50m
+        memory: 100Mi
+redis:
+  resources:
+    requests:
+      cpu: 10m
+      memory: 64Mi
+minio:
+  resources:
+    requests:
+      memory: 64Mi
+      cpu: 10m
+# Disable Rails bootsnap cache (temporary)
+global:
+  rails:
+    bootsnap:
+      enabled: false
+# Reduce replica counts, reducing CPU & memory requirements
+gitlab:
+  webservice:
+    minReplicas: 1
+    resources:
+      limits:
+       memory: 1.5G
+      requests:
+        cpu: 100m
+        memory: 900M
+    workhorse:
+      resources:
+        limits:
+          memory: 100M
+        requests:
+          cpu: 10m
+          memory: 10M
+  sidekiq:
+    minReplicas: 1
+    resources:
+      limits:
+        memory: 1.5G
+      requests:
+        cpu: 50m
+        memory: 625M
+  gitlab-shell:
+    minReplicas: 1
+registry:
+  hpa:
+    minReplicas: 1
+certmanager:
+  resources:
+    requests:
+      cpu: 10m
+      memory: 32Mi
