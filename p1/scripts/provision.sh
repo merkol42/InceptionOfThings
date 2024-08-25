@@ -20,10 +20,6 @@ export TKN=$(cat /vagrant/agent-token)
 if [ "$1" == "agent" ]; then
     curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="agent --server https://192.168.56.110:6443 --node-ip 192.168.56.111 --token $TKN" sh -s -
 fi
-echo "**********************************************************"
-export PATH=$PATH:/sbin:/usr/sbin # for ifconfig, k3s
-alias k="kubectl"
-echo "----------------------------------------------------------"
 
 #sudo bash -c 'echo "export PATH=\$PATH:/sbin:/usr/sbin" >> /etc/profile.d/k3s.sh'
 #sudo bash -c 'echo "alias k=\"kubectl\"" >> /etc/profile.d/k3s.sh'
